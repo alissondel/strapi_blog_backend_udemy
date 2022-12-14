@@ -1,0 +1,109 @@
+fragment setting on Setting {
+  blogName
+  blogDescription
+  text
+}
+
+fragment image on UploadFile {
+  altText: alternativeText
+  url
+  name
+}
+
+fragment menuLink on ComponentMenuMenuLink {
+  id_munu_link: id
+  link
+  text
+  newTab
+}
+
+fragment post on Post {
+  title
+  slug
+  allowComments
+}
+
+query GET_FULL {
+  setting {
+    data {
+      id_setting: id
+      attributes {
+        ...setting
+        logo {
+          data {
+            id_image: id
+            attributes {
+              ...image
+            }
+          }
+        }
+        menuLink {
+          ...menuLink
+        }
+        footer: text
+      }
+    }
+  }
+
+  posts {
+    data {
+      id_post: id
+      attributes {
+        ...post
+      }
+    }
+  }
+}
+
+query GET_POST_BY_ID($id: ID!) {
+  post(id: $id){
+    data {
+      id_post: id
+      attributes {
+        ...post
+      }
+    }
+  }
+}
+
+# query GET_POST_BY_AUTHOR($slug: String!) {
+#   post(where {
+#     data {
+#       attributes {
+#         author {
+#         slug: $slug
+#       }
+#       }
+#     }
+#   }) {
+#     data {
+#       attributes {
+#         ...post
+#       }
+#     }
+#   }
+# }
+
+# query GET_AUTHORS {
+# 	authors {
+#    data {
+#     	id
+#     	attributes {
+#         displayName
+#         slug
+#       }
+#   	}
+# 	}
+# }
+
+# query GET_CATEGORIES {
+# 	categories {
+#    data {
+#     	id
+#     	attributes {
+#       	displayName
+#       	slug
+#     	}
+#   	}
+# 	}
+# }
